@@ -1,0 +1,27 @@
+/bin/
+/out/
+/build/
+
+*.class
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+Thumbs.db
+
+# IDE 
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+.DS_Store
+Thumbs.db
