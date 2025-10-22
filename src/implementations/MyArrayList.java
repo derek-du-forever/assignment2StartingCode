@@ -135,10 +135,7 @@ public class MyArrayList<T> implements ListADT<T> {
             throw new NullPointerException("The provided array cannot be null.");
         }
         if (toHold.length < size) {
-            // Create a new array of the same type and size
-            Object[] newArray = new Object[size];
-            copyArray(elements, 0, newArray, 0, size);
-            return (T[]) newArray;
+            toHold = (T[]) java.lang.reflect.Array.newInstance(toHold.getClass().getComponentType(), size);
         }
         copyArray(elements, 0, toHold, 0, size);
         return toHold;
