@@ -85,4 +85,30 @@ public class MyQueue<T> implements QueueADT<T> {
         return -1;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof MyQueue)) {
+            return false;
+        }
+        MyQueue<?> otherQueue = (MyQueue<?>) other;
+        if (this.size() != otherQueue.size()) {
+            return false;
+        }
+
+        utilities.Iterator<T> thisIter = this.iterator();
+        utilities.Iterator<?> otherIter = otherQueue.iterator();
+
+        while (thisIter.hasNext() && otherIter.hasNext()) {
+            T thisElem = thisIter.next();
+            Object otherElem = otherIter.next();
+            if (!thisElem.equals(otherElem)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

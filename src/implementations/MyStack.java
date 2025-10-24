@@ -1,7 +1,6 @@
 package implementations;
 
 import java.util.EmptyStackException;
-import java.util.NoSuchElementException;
 
 import utilities.Iterator;
 import utilities.ListADT;
@@ -16,7 +15,7 @@ public class MyStack<T> implements StackADT<T> {
 
     @Override
     public void push(T element) {
-        stackList.add(element);
+        stackList.add(0, element);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class MyStack<T> implements StackADT<T> {
         if (isEmpty()) {
             throw new EmptyStackException();
         }
-        return stackList.remove(size() - 1);
+        return stackList.remove(0);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class MyStack<T> implements StackADT<T> {
         if (isEmpty()) {
             throw new EmptyStackException();
         }
-        return stackList.get(size() - 1);
+        return stackList.get(0);
     }
 
     @Override
@@ -57,31 +56,14 @@ public class MyStack<T> implements StackADT<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private int currentIndex = size() - 1;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex >= 0;
-            }
-
-            @Override
-            public T next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException("No more elements in stack");
-                }
-                T element = stackList.get(currentIndex);
-                currentIndex--;
-                return element;
-            }
-        };
+        return stackList.iterator();
     }
 
     @Override
     public int search(T toFind) {
-        for (int i = size() - 1; i >= 0; i--) {
+        for (int i = 0; i < stackList.size(); i++) {
             if (stackList.get(i).equals(toFind)) {
-                return size() - i;
+                return i + 1;
             }
         }
         return -1;
