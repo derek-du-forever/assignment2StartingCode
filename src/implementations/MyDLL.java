@@ -1,5 +1,7 @@
 package implementations;
 
+import java.util.NoSuchElementException;
+
 import utilities.Iterator;
 import utilities.ListADT;
 
@@ -29,23 +31,25 @@ public class MyDLL<T> implements ListADT<T> {
             throw new IndexOutOfBoundsException("Invalid index");
         }
 
-        size++;
         MyDLLNode<T> newNode = new MyDLLNode<>(toAdd);
         if (head == null) {
             head = newNode;
             tail = newNode;
+            size++;
             return true;
         }
         if (index == 0) {
             newNode.setNext(head);
             head.setPrev(newNode);
             head = newNode;
+            size++;
             return true;
         }
         if (index == size) {
             tail.setNext(newNode);
             newNode.setPrev(tail);
             tail = newNode;
+            size++;
             return true;
         }
         MyDLLNode<T> current = head;
@@ -57,6 +61,7 @@ public class MyDLL<T> implements ListADT<T> {
         newNode.setPrev(previous);
         newNode.setNext(current);
         current.setPrev(newNode);
+        size++;
         return true;
     }
 
@@ -217,7 +222,7 @@ public class MyDLL<T> implements ListADT<T> {
             @Override
             public T next() {
                 if (!hasNext()) {
-                    throw new IndexOutOfBoundsException("No more elements to iterate");
+                    throw new NoSuchElementException("No more elements to iterate");
                 }
                 T data = current.getData();
                 current = current.getNext();

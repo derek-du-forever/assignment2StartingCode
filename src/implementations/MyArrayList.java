@@ -176,9 +176,7 @@ public class MyArrayList<T> implements ListADT<T> {
     }
 
     private void copyArray(Object[] src, int srcPos, Object[] dest, int destPos, int length) {
-        for (int i = 0; i < length; i++) {
-            dest[destPos + i] = src[srcPos + i];
-        }
+        System.arraycopy(src, srcPos, dest, destPos, length);
     }
 
 }
