@@ -108,4 +108,21 @@ public class MyStack<T> implements StackADT<T> {
         return true;
     }
 
+    @Override
+    public boolean equals(StackADT<T> that) {
+        if (this.size() != that.size()) {
+            return false;
+        }
+        Iterator<T> thisIter = this.iterator();
+        Iterator<T> thatIter = that.iterator();
+        while (thisIter.hasNext() && thatIter.hasNext()) {
+            T thisElem = thisIter.next();
+            T thatElem = thatIter.next();
+            if (!thisElem.equals(thatElem)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

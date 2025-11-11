@@ -17,7 +17,7 @@ public class MyQueue<T> implements QueueADT<T> {
     }
 
     @Override
-    public T dequeue() {
+    public T dequeue() throws EmptyQueueException {
         if (isEmpty()) {
             throw new EmptyQueueException("Queue is empty");
         }
@@ -25,7 +25,7 @@ public class MyQueue<T> implements QueueADT<T> {
     }
 
     @Override
-    public T peek() {
+    public T peek() throws EmptyQueueException {
         if (isEmpty()) {
             throw new EmptyQueueException("Queue is empty");
         }
@@ -105,6 +105,23 @@ public class MyQueue<T> implements QueueADT<T> {
             T thisElem = thisIter.next();
             Object otherElem = otherIter.next();
             if (!thisElem.equals(otherElem)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean equals(QueueADT<T> that) {
+        if (this.size() != that.size()) {
+            return false;
+        }
+        utilities.Iterator<T> thisIter = this.iterator();
+        utilities.Iterator<T> thatIter = that.iterator();
+        while (thisIter.hasNext() && thatIter.hasNext()) {
+            T thisElem = thisIter.next();
+            T thatElem = thatIter.next();
+            if (!thisElem.equals(thatElem)) {
                 return false;
             }
         }
