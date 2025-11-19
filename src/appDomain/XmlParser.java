@@ -21,26 +21,55 @@ public class XmlParser {
     public void parseXmlFromFile(String fileName) {
         tags = new MyArrayList<>();
         File inputFile = new File("res/" + fileName);
+
         try {
             List<String> lines = Files.readAllLines(Paths.get(inputFile.getPath()));
 
             int lineNumber = 0;
             for (String line : lines) {
                 lineNumber++;
-                String lineString = line.trim();
-                if (lineString.equals("")) {
+
+                if (line.trim().isEmpty())
                     continue;
-                }
-                if (lineString.startsWith("<?xml")) {
+                if (line.trim().startsWith("<?xml"))
                     continue;
+
+                List<String> tagStrings = extractTagsFromLine(line);
+
+                for (String t : tagStrings) {
+                    XmlTag tag = new XmlTag(t, lineNumber);
+                    tags.add(tag);
                 }
-                XmlTag tag = new XmlTag(line, lineNumber);
-                tags.add(tag);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         parseXml();
+    }
+
+    private List<String> extractTagsFromLine(String line) {
+        List<String> list = new LinkedList<>();
+
+        int i = 0;
+        while (i < line.length()) {
+            int start = line.indexOf('<', i);
+            if (start == -1) {
+                list.add("");
+                break;
+            }
+
+            int end = line.indexOf('>', start);
+            if (end == -1)
+                break;
+
+            String tag = line.substring(start, end + 1);
+            list.add(tag);
+
+            i = end + 1;
+        }
+
+        return list;
     }
 
     private XmlTag nextTag() {
@@ -57,6 +86,7 @@ public class XmlParser {
 
         XmlTag tag;
         while ((tag = nextTag()) != null) {
+
             if (tag.isSelfClosing()) {
                 continue;
             }
