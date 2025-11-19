@@ -20,11 +20,11 @@ public class XmlTag {
             isSelfClosing = true;
             isStart = false;
             isEnd = false;
-            name = this.lineString.substring(1, this.lineString.length() - 2).trim();
+            name = this.lineString.substring(1, this.lineString.length() - 2).trim().split(" ")[0];
         } else {
             isStart = true;
             isEnd = false;
-            name = this.lineString.substring(1, this.lineString.length() - 1).trim();
+            name = this.lineString.substring(1, this.lineString.length() - 1).trim().split(" ")[0];
         }
     }
 
@@ -61,7 +61,7 @@ public class XmlTag {
             return false;
         }
         XmlTag other = (XmlTag) obj;
-        return name.equals(other.name);
+        return name.equals(other.getName());
     }
 
 }
